@@ -1,0 +1,98 @@
+#!/usr/bin/snakemake --snakefile
+
+# cdshelf
+# Copyright (C) 2017  Marcel Schilling
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+#######################
+# general information #
+#######################
+
+# file:     cdshelf
+# created:  2017-03-26
+# author:   Marcel Schilling <marcel.schilling@mdc-berlin.de>
+# license:  GNU Affero General Public License Version 3 (GNU AGPL v3)
+# purpose:  Audio CD backup & conversion tool
+
+
+######################################
+# change log (reverse chronological) #
+######################################
+
+# 2017-03-26: initial version (help, usage & license)
+
+
+#######################
+# message definitions #
+#######################
+
+# define usage message
+usage_msg="""\
+usage: cdshelf <command> [<command> ...]
+
+The following commands are currently supported:
+
+help	print help message
+usage	show usage
+license	print license
+"""
+
+# define help message
+help_msg="""\
+cdshelf
+
+Audio CD backup & conversion tool
+
+
+""" + usage_msg
+
+# define license message
+license_msg="""\
+Copyright (C) 2017  Marcel Schilling
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+
+############
+# messages #
+############
+
+# print help message
+rule help:
+    run:
+        print(help_msg)
+
+# print usage message
+rule usage:
+    run:
+        print(usage_msg)
+
+# print license message
+rule license:
+    run:
+        print(license_msg)
