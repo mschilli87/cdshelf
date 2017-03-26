@@ -40,6 +40,7 @@ The following commands are currently supported:
  * `help` - print help message
  * `usage` - show usage
  * `license` - print license
+ * `discid` - print disc ID of Audio CD in CD device
  * `device` - print device `cdshelf` will read Audio CDs from
 
 The following parameter is currently supported:

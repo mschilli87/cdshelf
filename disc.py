@@ -19,19 +19,21 @@
 # general information #
 #######################
 
-# file:     disc.py
-# created:  2017-03-26
-# author:   Marcel Schilling <marcel.schilling@mdc-berlin.de>
-# license:  GNU Affero General Public License Version 3 (GNU AGPL v3)
-# purpose:  define disc-related functions for cdshelf Audio CD backup &
-#           conversion tool
+# file:        disc.py
+# created:     2017-03-26
+# last update: 2017-03-26
+# author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
+# license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
+# purpose:     define disc-related functions for cdshelf Audio CD backup &
+#              conversion tool
 
 
 ######################################
 # change log (reverse chronological) #
 ######################################
 
-# 2017-03-26: initial version (get_device)
+# 2017-03-26: added read_disc_data & get_disc_id functions
+#             initial version (get_device)
 
 
 ###########
@@ -39,7 +41,8 @@
 ###########
 
 import messages
-from discid import get_default_device
+from discid import get_default_device, DiscError
+from discid import read as read_disc
 
 
 #############
@@ -62,3 +65,32 @@ def get_device(params):
   # output device to be used before returning it
   print(messages.selected_device(device))
   return(device)
+
+
+# read disc data of Audio CD
+def read_disc_data(params):
+
+  # get device and print progress message
+  device = get_device(params)
+  print(messages.read_disc(device))
+
+  # read disc data from specified device
+  try:
+    disc = read_disc(device)
+    return(disc)
+
+  # abort with error if unsuccessful
+  except DiscError:
+    print(messages.disc_error(device))
+    exit(1)
+
+
+# get disc ID of Audio CD
+def get_disc_id(params):
+
+  # read disc data and get disc ID
+  disc_id = read_disc_data(params).id
+
+  # output disc ID read before returning it
+  print(messages.disc_id(disc_id))
+  return(disc_id)

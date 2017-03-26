@@ -19,18 +19,20 @@
 # general information #
 #######################
 
-# file:    disc.snake
-# created: 2017-03-26
-# author:  Marcel Schilling <marcel.schilling@mdc-berlin.de>
-# license: GNU Affero General Public License Version 3 (GNU AGPL v3)
-# purpose: define disc-related rules for Audio CD backup & conversion tool
+# file:        disc.snake
+# created:     2017-03-26
+# last update: 2017-03-26
+# author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
+# license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
+# purpose:     define disc-related rules for Audio CD backup & conversion tool
 
 
 ######################################
 # change log (reverse chronological) #
 ######################################
 
-# 2017-03-26: initial version (device)
+# 2017-03-26: added discid rule
+#             initial version (device)
 
 
 ###########
@@ -48,3 +50,7 @@ import disc
 rule device:
   run:
     disc.get_device(config)
+
+rule discid:
+  run:
+    disc.get_disc_id(config)

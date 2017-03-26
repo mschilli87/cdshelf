@@ -31,7 +31,9 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-03-26: added device command & parameter to usage message / added
+# 2017-03-26: added discid command to usage message / added messages related to
+#             disc data reading & disc ID extraction
+#             added device command & parameter to usage message / added
 #             device-related messages
 #             initial version (help, usage & license)
 
@@ -49,6 +51,7 @@ The following commands are currently supported:
 help	print help message
 usage	show usage
 license	print license
+discid	print disc ID of Audio CD in CD device
 device	print CD device to be used for reading Audio CDs
 
 The following parameter is currently supported:
@@ -99,3 +102,20 @@ overwrite by setting --config device=<device>\
 # message indicating selected device
 def selected_device(device):
   return("using CD device '" + device + "'")
+
+
+#########################
+# disc-related messages #
+#########################
+
+# message indicating disc reading
+def read_disc(device):
+  return("reading disc in device '" + device + "'...")
+
+# message indicating disc reading error
+def disc_error(device):
+  return("ERROR: Cannot read disc in device '" + device + "'!")
+
+# message indicating read disc ID
+def disc_id(disc_id):
+  return("read disc ID '" + disc_id + "'")
