@@ -40,3 +40,10 @@
 
 # untrack Python3 bytecode directory
 /__pycache__/
+
+
+###################
+# Snakemake cache #
+###################
+
+/.snakemake/
