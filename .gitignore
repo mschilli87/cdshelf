@@ -1,6 +1,4 @@
-#!/usr/bin/snakemake --snakefile
-
-# cdshelf
+# cdshelf .gitignore
 # Copyright (C) 2017  Marcel Schilling
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,45 +19,24 @@
 # general information #
 #######################
 
-# file:        cdshelf
-# created:     2017-03-26
-# last update: 2017-03-26
-# author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
-# license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
-# purpose:     Audio CD backup & conversion tool
+# file:     .gitignore
+# created:  2017-03-26
+# author:   Marcel Schilling <marcel.schilling@mdc-berlin.de>
+# license:  GNU Affero General Public License Version 3 (GNU AGPL v3)
+# purpose:  untrack bytecode created by running cdshelf Audio CD backup &
+#           conversion tool
 
 
 ######################################
 # change log (reverse chronological) #
 ######################################
 
-# 2017-03-26: moved message definitions into separate module
-#             initial version (help, usage & license)
-
-
-###########
-# imports #
-###########
-
-# get message definitions
-import messages
+# 2017-03-26: initial version (__pycache__)
 
 
 ############
-# messages #
+# bytecode #
 ############
 
-# print help message
-rule help:
-    run:
-        print(messages.help)
-
-# print usage message
-rule usage:
-    run:
-        print(messages.usage)
-
-# print license message
-rule license:
-    run:
-        print(messages.license)
+# untrack Python3 bytecode directory
+/__pycache__/
