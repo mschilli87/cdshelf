@@ -26,12 +26,13 @@ If not, see <http://www.gnu.org/licenses/>.
 ## Dependencies
 
  * [Snakemake](https://snakemake.readthedocs.io)
+ * [python-discid](https://python-discid.readthedocs.io)
 
 
 ## Usage
 
 ```sh
-cdshelf <command> [<command> ...]
+cdshelf <command> [<command> ...] [--config <parameter>=<value>]
 ```
 
 The following commands are currently supported:
@@ -39,3 +40,8 @@ The following commands are currently supported:
  * `help` - print help message
  * `usage` - show usage
  * `license` - print license
+ * `device` - print device `cdshelf` will read Audio CDs from
+
+The following parameter is currently supported:
+
+ * `device` - device to read Audio CDs from (default: detect default device)

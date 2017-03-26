@@ -1,6 +1,4 @@
-#!/usr/bin/snakemake --snakefile
-
-# cdshelf
+# cdshelf disc Snakefile
 # Copyright (C) 2017  Marcel Schilling
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,40 +19,32 @@
 # general information #
 #######################
 
-# file:        cdshelf
-# created:     2017-03-26
-# last update: 2017-03-26
-# author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
-# license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
-# purpose:     Audio CD backup & conversion tool
+# file:    disc.snake
+# created: 2017-03-26
+# author:  Marcel Schilling <marcel.schilling@mdc-berlin.de>
+# license: GNU Affero General Public License Version 3 (GNU AGPL v3)
+# purpose: define disc-related rules for Audio CD backup & conversion tool
 
 
 ######################################
 # change log (reverse chronological) #
 ######################################
 
-# 2017-03-26: included disc-related rules
-#             moved message rules into separate Snakefile
-#             moved message definitions into separate module
-#             initial version (help, usage & license)
+# 2017-03-26: initial version (device)
 
 
-############
-# includes #
-############
+###########
+# imports #
+###########
 
-# get message rules
-include: "messages.snake"
-
-# get message rules
-include: "disc.snake"
+# get disc-related functions
+import disc
 
 
-################
-# default rule #
-################
+#########
+# rules #
+#########
 
-# by default, show help
-rule all:
-  input:
-    "help.done"
+rule device:
+  run:
+    disc.get_device(config)

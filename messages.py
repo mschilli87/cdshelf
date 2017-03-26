@@ -19,18 +19,21 @@
 # general information #
 #######################
 
-# file:     messages.py
-# created:  2017-03-26
-# author:   Marcel Schilling <marcel.schilling@mdc-berlin.de>
-# license:  GNU Affero General Public License Version 3 (GNU AGPL v3)
-# purpose:  define messages for cdshelf Audio CD backup & conversion tool
+# file:        messages.py
+# created:     2017-03-26
+# last update: 2017-03-26
+# author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
+# license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
+# purpose:     define messages for cdshelf Audio CD backup & conversion tool
 
 
 ######################################
 # change log (reverse chronological) #
 ######################################
 
-# 2017-03-26: initial version (help, usage & license)
+# 2017-03-26: added device command & parameter to usage message / added
+#             device-related messages
+#             initial version (help, usage & license)
 
 
 #######################
@@ -39,13 +42,18 @@
 
 # define usage message
 usage="""\
-usage: cdshelf <command> [<command> ...]
+usage: cdshelf <command> [<command> ...] [--config <parameter>=<value>]
 
 The following commands are currently supported:
 
 help	print help message
 usage	show usage
 license	print license
+device	print CD device to be used for reading Audio CDs
+
+The following parameter is currently supported:
+
+device	device to read Audio CDs from (default: detect default device)
 """
 
 # define help message
@@ -74,3 +82,20 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+
+###########################
+# device-related messages #
+###########################
+
+# message indicating user-specified device
+user_device = "CD device specified by user..."
+
+# message indicating default device detection
+default_device = """\
+no CD device specified by user; detecting default device...
+overwrite by setting --config device=<device>\
+"""
+
+# message indicating selected device
+def selected_device(device):
+  return("using CD device '" + device + "'")
