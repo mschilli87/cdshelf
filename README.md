@@ -27,22 +27,27 @@ If not, see <http://www.gnu.org/licenses/>.
 
  * [Snakemake](https://snakemake.readthedocs.io)
  * [python-discid](https://python-discid.readthedocs.io)
+ * [musicbrainzngs](https://python-musicbrainzngs.readthedocs.io)
+ * [cdrdao](http://cdrdao.sourceforge.net)
 
 
 ## Usage
 
 ```sh
-cdshelf <command> [<command> ...] [--config <parameter>=<value>]
+cdshelf <command> [<command> ...] [--config <parameter>=<value> [<parameter>=<value>]]
 ```
 
 The following commands are currently supported:
 
  * `help` - print help message
+ * `image` - create CD image
  * `usage` - show usage
  * `license` - print license
  * `discid` - print disc ID of Audio CD in CD device
  * `device` - print device `cdshelf` will read Audio CDs from
+ * `directory` - print `cdshelf` base directory
 
-The following parameter is currently supported:
+The following parameters are currently supported:
 
  * `device` - device to read Audio CDs from (default: detect default device)
+ * `directory` - `cdshelf` base directory (default: `'/home/lecram/music'`)
