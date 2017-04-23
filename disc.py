@@ -21,7 +21,7 @@
 
 # file:        disc.py
 # created:     2017-03-26
-# last update: 2017-03-28
+# last update: 2017-04-23
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define disc-related functions for cdshelf Audio CD backup &
@@ -32,6 +32,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-04-23: corrected capitalization of 'Disc ID'
 # 2017-03-28: added metadata fetching & disc image creation functions
 # 2017-03-26: added read_disc_data & get_disc_id functions
 #             initial version (get_device)
@@ -88,13 +89,13 @@ def read_disc_data(device):
     exit(1)
 
 
-# get disc ID of Audio CD
+# get Disc ID of Audio CD
 def get_disc_id(params):
 
-  # read disc data and get disc ID
+  # read disc data and get Disc ID
   disc_id = read_disc_data(params).id
 
-  # output disc ID read before returning it
+  # output Disc ID read before returning it
   print(messages.disc_id(disc_id))
   return(disc_id)
 
@@ -106,7 +107,7 @@ def lookup_disc_id(disc):
   set_useragent("cdshelf", "alpha",
                 "https://github.com/mschilli87/cdshelf/issues")
 
-  # fetch metadata for disc ID
+  # fetch metadata for Disc ID
   print(messages.lookup_disc_id(disc.id))
   try:
     disc_metadata = fetch_metadata(disc.id, cdstubs=False, includes=["artists"])
@@ -143,13 +144,13 @@ def extract_title(metadata):
   return(metadata["title"])
 
 
-# extract index of medium matching given disc ID from release metadata
+# extract index of medium matching given Disc ID from release metadata
 def get_medium_index(mediums, disc_id):
 
   # count mediums
   n_mediums = len(mediums)
 
-  # match disc ID
+  # match Disc ID
   medium_index = [i + 1 for i in range(n_mediums)
                   if mediums[i]["disc-list"][0]["id"] == disc_id][0]
 
@@ -164,7 +165,7 @@ def get_basename(disc_data):
   # fetch metadata
   metadata = lookup_disc_id(disc_data)
 
-  # return basename: <artist>/<year>_<release>/<medium_index>-<disc ID>
+  # return basename: <artist>/<year>_<release>/<medium_index>-<Disc ID>
   return(extract_artist_credit(metadata).lower().replace(" ","_") + "/" + \
          extract_year(metadata) + "_" + \
          extract_title(metadata).lower().replace(" ","_") + "/" + \

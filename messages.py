@@ -21,7 +21,7 @@
 
 # file:        messages.py
 # created:     2017-03-26
-# last update: 2017-03-28
+# last update: 2017-04-23
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define messages for cdshelf Audio CD backup & conversion tool
@@ -31,10 +31,11 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-04-23: corrected capitalization of 'Disc ID'
 # 2017-03-28: added image & directory commands & directory parameter to usage
 #             message / added metadata-, directory- & image-related messages
 # 2017-03-26: added discid command to usage message / added messages related to
-#             disc data reading & disc ID extraction
+#             disc data reading & Disc ID extraction
 #             added device command & parameter to usage message / added
 #             device-related messages
 #             initial version (help, usage & license)
@@ -61,7 +62,7 @@ help      print help message
 image     create CD image
 usage     show usage
 license   print license
-discid    print disc ID of Audio CD in CD device
+discid    print Disc ID of Audio CD in CD device
 device    print CD device to be used for reading Audio CDs
 directory print cdshelf base directory
 
@@ -128,26 +129,26 @@ def read_disc(device):
 def disc_error(device):
   return("ERROR: Cannot read disc in device '" + device + "'!")
 
-# message indicating read disc ID
+# message indicating read Disc ID
 def disc_id(disc_id):
-  return("read disc ID '" + disc_id + "'")
+  return("read Disc ID '" + disc_id + "'")
 
 
 #############################
 # metadata-related messages #
 #############################
 
-# message indicating disc ID lookup
+# message indicating Disc ID lookup
 def lookup_disc_id(disc_id):
-  return("fetching metadata for disc ID '" + disc_id + "' from MusicBrainz...")
+  return("fetching metadata for Disc ID '" + disc_id + "' from MusicBrainz...")
 
-# message indicating disc ID lookup error
+# message indicating Disc ID lookup error
 def disc_id_unknown(disc_id):
-  return("ERROR: disc ID '" + disc_id + "' is not associated to any release on MusicBrainz")
+  return("ERROR: Disc ID '" + disc_id + "' is not associated to any release on MusicBrainz")
 
-# message indicating ambiguous disc ID lookup result
+# message indicating ambiguous Disc ID lookup result
 def disc_id_ambigious(disc_id):
-  return("ERROR: disc ID '" + disc_id + "' is associated to several releases on MusicBrainz")
+  return("ERROR: Disc ID '" + disc_id + "' is associated to several releases on MusicBrainz")
 
 
 ##############################

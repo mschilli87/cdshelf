@@ -43,7 +43,7 @@ The following commands are currently supported:
  * `image` - create CD image
  * `usage` - show usage
  * `license` - print license
- * `discid` - print disc ID of Audio CD in CD device
+ * `discid` - print Disc ID of Audio CD in CD device
  * `device` - print device `cdshelf` will read Audio CDs from
  * `directory` - print `cdshelf` base directory
 
