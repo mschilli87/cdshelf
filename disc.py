@@ -32,7 +32,9 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-04-23: corrected capitalization of 'Disc ID'
+# 2017-04-23: corrected user specified shelf-directory message (copy/paste
+#             error)
+#             corrected capitalization of 'Disc ID'
 # 2017-03-28: added metadata fetching & disc image creation functions
 # 2017-03-26: added read_disc_data & get_disc_id functions
 #             initial version (get_device)
@@ -179,7 +181,7 @@ def get_directory(params):
   # if user specified directory parameter: use user specified directory
   try:
     directory = params["directory"]
-    print(messages.user_device)
+    print(messages.user_directory)
 
   # if no directory parameter specified: detect default directory
   except KeyError:
