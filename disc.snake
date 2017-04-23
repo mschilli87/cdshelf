@@ -21,7 +21,7 @@
 
 # file:        disc.snake
 # created:     2017-03-26
-# last update: 2017-03-28
+# last update: 2017-04-23
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define disc-related rules for Audio CD backup & conversion tool
@@ -31,6 +31,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-04-23: switched to new parameters module to obtain directory parameter
 # 2017-03-28: added image rule
 # 2017-03-26: added discid rule
 #             initial version (device)
@@ -39,6 +40,9 @@
 ###########
 # imports #
 ###########
+
+# get parameter-related functions
+import parameters
 
 # get disc-related functions
 import disc
@@ -58,11 +62,11 @@ rule discid:
 
 rule directory:
   run:
-    disc.get_directory(config)
+    parameters.get_param("directory", config)
 
 rule image:
   run:
     device = disc.get_device(config)
     basename = disc.get_basename(disc.read_disc_data(device))
-    directory = disc.get_directory(config)
+    directory = parameters.get_param("directory", config)
     shell(disc.create_image(device, directory + "/bin", basename))

@@ -32,7 +32,8 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-04-23: adopted re-factored parameter-related messages
+# 2017-04-23: removed get_directory in favor of parameters.get_param
+#             adopted re-factored parameter-related messages
 #             corrected user specified shelf-directory message (copy/paste
 #             error)
 #             corrected capitalization of 'Disc ID'
@@ -174,24 +175,6 @@ def get_basename(disc_data):
          extract_title(metadata).lower().replace(" ","_") + "/" + \
          get_medium_index(metadata["medium-list"], disc_data.id) + "-" + \
          disc_data.id)
-
-
-# get cdshelf base directory
-def get_directory(params):
-
-  # if user specified directory parameter: use user specified directory
-  try:
-    directory = params["directory"]
-    print(messages.user_param("directory"))
-
-  # if no directory parameter specified: detect default directory
-  except KeyError:
-    print(messages.default_param("directory"))
-    directory = defaults.directory
-
-  # output directory to be used before returning it
-  print(messages.selected_param("directory",directory))
-  return(directory)
 
 
 # create CD image
