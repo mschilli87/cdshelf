@@ -32,7 +32,8 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-04-23: corrected user specified shelf-directory message (copy/paste
+# 2017-04-23: adopted re-factored parameter-related messages
+#             corrected user specified shelf-directory message (copy/paste
 #             error)
 #             corrected capitalization of 'Disc ID'
 # 2017-03-28: added metadata fetching & disc image creation functions
@@ -64,15 +65,15 @@ def get_device(params):
   # if user specified device parameter: use user specified device
   try:
     device = params["device"]
-    print(messages.user_device)
+    print(messages.user_param("device"))
 
   # if no device parameter specified: detect default device
   except KeyError:
-    print(messages.default_device)
+    print(messages.default_param("device"))
     device = get_default_device()
 
   # output device to be used before returning it
-  print(messages.selected_device(device))
+  print(messages.selected_param("device",device))
   return(device)
 
 
@@ -181,15 +182,15 @@ def get_directory(params):
   # if user specified directory parameter: use user specified directory
   try:
     directory = params["directory"]
-    print(messages.user_directory)
+    print(messages.user_param("directory"))
 
   # if no directory parameter specified: detect default directory
   except KeyError:
-    print(messages.default_directory)
+    print(messages.default_param("directory"))
     directory = defaults.directory
 
   # output directory to be used before returning it
-  print(messages.selected_directory(directory))
+  print(messages.selected_param("directory",directory))
   return(directory)
 
 

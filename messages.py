@@ -31,7 +31,9 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-04-23: corrected capitalization of 'Disc ID'
+# 2017-04-23: re-factored parameter-related message definition (functions
+#             instead of copy/paste code)
+#             corrected capitalization of 'Disc ID'
 # 2017-03-28: added image & directory commands & directory parameter to usage
 #             message / added metadata-, directory- & image-related messages
 # 2017-03-26: added discid command to usage message / added messages related to
@@ -99,22 +101,50 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-###########################
-# device-related messages #
-###########################
 
-# message indicating user-specified device
-user_device = "CD device specified by user..."
+##############################
+# parameter-related messages #
+##############################
 
-# message indicating default device detection
-default_device = """\
-no CD device specified by user; detecting default device...
-overwrite by setting --config device=<device>\
-"""
+# verbose text description to use in messages instead of parameter name
+param_label = {
+  "device": "CD device",
+  "directory": "shelf directory",
+}
 
-# message indicating selected device
-def selected_device(device):
-  return("using CD device '" + device + "'")
+
+# message indicating user specified parameter
+def user_param(parameter):
+  return(param_label[parameter] + " specified by user...")
+
+# text description of how default parameter is obtained
+param_default_action = {
+  "device": "detecting default device",
+}
+
+
+# message indicating default parameter usage
+def default_param(parameter):
+
+  # get parameter label
+  param = param_label[parameter]
+
+  # if specific default parameter action was defined, use it
+  try:
+    default_action = param_default_action[parameter]
+
+  # otherwise, use default description
+  except KeyError:
+    default_action = "using default " + param
+
+  # compose message from parts & return
+  return("\nno " + param + " specified by user; " + default_action + "...\n" +
+         "overwrite by setting --config " + parameter + "=<" + parameter +
+         ">\n")
+
+# message indicating selected value for parameter
+def selected_param(parameter, selected_value):
+  return("using " + param_label[parameter] + " '" + selected_value + "'")
 
 
 #########################
@@ -149,24 +179,6 @@ def disc_id_unknown(disc_id):
 # message indicating ambiguous Disc ID lookup result
 def disc_id_ambigious(disc_id):
   return("ERROR: Disc ID '" + disc_id + "' is associated to several releases on MusicBrainz")
-
-
-##############################
-# directory-related messages #
-##############################
-
-# message indicating user-specified directory
-user_directory = "shelf directory specified by user..."
-
-# message indicating default directory usage
-default_directory = """\
-no directory specified by user; using default directory...
-overwrite by setting --config directory=<directory>\
-"""
-
-# message indicating selected directory
-def selected_directory(directory):
-  return("using directory device '" + directory + "'")
 
 
 ##########################
