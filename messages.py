@@ -21,7 +21,7 @@
 
 # file:        messages.py
 # created:     2017-03-26
-# last update: 2017-04-23
+# last update: 2017-08-29
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define messages for cdshelf Audio CD backup & conversion tool
@@ -31,6 +31,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-08-29: added tmpdir_prefix & tmpdir_suffix parameters
 # 2017-04-23: re-factored parameter-related message definition (functions
 #             instead of copy/paste code)
 #             corrected capitalization of 'Disc ID'
@@ -70,8 +71,10 @@ directory print cdshelf base directory
 
 The following parameters are currently supported:
 
-device    device to read Audio CDs from (default: detect default device)
-directory cdshelf base directory (default: '""" + defaults.directory + """')
+device        device to read Audio CDs from (default: detect default device)
+directory     cdshelf base directory (default: '""" + defaults.directory + """')
+tmpdir_prefix cdshelf temporary directory prefix (default: '""" + defaults.tmpdir_prefix + """')
+tmpdir_suffix cdshelf temporary directory suffix (default: '""" + defaults.tmpdir_suffix + """')
 """
 
 # define help message
@@ -110,6 +113,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 param_label = {
   "device": "CD device",
   "directory": "shelf directory",
+  "tmpdir_prefix": "cdshelf temporary directory prefix",
+  "tmpdir_suffix": "cdshelf temporary directory suffix",
 }
 
 

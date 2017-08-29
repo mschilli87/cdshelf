@@ -1,4 +1,4 @@
-# cdshelf default parameter definitions
+# cdshelf tmpdir-related functions
 # Copyright (C) 2017  Marcel Schilling
 #
 # This program is free software: you can redistribute it and/or modify
@@ -19,32 +19,32 @@
 # general information #
 #######################
 
-# file:        defaults.py
-# created:     2017-03-28
-# last update: 2017-08-29
-# author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
-# license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
-# purpose:     define default parameters for cdshelf Audio CD backup &
-#              conversion tool
+# file:      tmpdir.py
+# created:   2017-08-29
+# author:    Marcel Schilling <marcel.schilling@mdc-berlin.de>
+# license:   GNU Affero General Public License Version 3 (GNU AGPL v3)
+# purpose:   define functions used to create temporary directory for cdshelf
+#            Audio CD backup & conversion tool
 
 
 ######################################
 # change log (reverse chronological) #
 ######################################
 
-# 2017-08-29: added tmpdir_prefix & tmpdir_suffix parameters
-# 2017-03-28: initial version (directory)
+# 2017-08-29: initial version (create_tmpdir)
 
 
-#################################
-# default parameter definitions #
-#################################
+###########
+# imports #
+###########
 
-# default cdshelf base directory
-directory = "/home/lecram/music"
+from tempfile import mkdtemp
 
-# default cdshelf temporary directory prefix
-tmpdir_prefix = "cdshelf."
 
-# default cdshelf temporary directory suffix
-tmpdir_suffix = ".tmpdir"
+#############
+# functions #
+#############
+
+# create temporary directory
+def create_tmpdir(pref, suff):
+  return(mkdtemp(suffix = suff, prefix = pref))

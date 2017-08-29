@@ -21,7 +21,7 @@
 
 # file:        disc.snake
 # created:     2017-03-26
-# last update: 2017-04-23
+# last update: 2017-08-29
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define disc-related rules for Audio CD backup & conversion tool
@@ -31,15 +31,28 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-08-29: added passing of variables from one rule to another through
+#             (temporary) files
 # 2017-04-23: switched to new parameters module to obtain directory parameter
 # 2017-03-28: added image rule
 # 2017-03-26: added discid rule
 #             initial version (device)
 
 
+############
+# includes #
+############
+
+# get tmpdir-related rules
+include: "tmpdir.snake"
+
+
 ###########
 # imports #
 ###########
+
+# get functions to store (Python) variables in files
+import varfiles
 
 # get parameter-related functions
 import parameters
@@ -53,20 +66,43 @@ import disc
 #########
 
 rule device:
-  run:
-    disc.get_device(config)
-
-rule discid:
-  run:
-    disc.get_disc_id(disc.get_device(config))
-
-rule directory:
-  run:
-    parameters.get_param("directory", config)
-
-rule image:
+  input:
+    tmpdir = rules.tmpdir.output.tmpdir
+  output:
+    device_file = temp(varfiles.get_varfile("device",
+                                            rules.tmpdir.output.tmpdir))
   run:
     device = disc.get_device(config)
-    basename = disc.get_basename(disc.read_disc_data(device))
+    varfiles.write_varfile(device, output.device_file)
+
+rule discid:
+  input:
+    tmpdir = rules.tmpdir.output.tmpdir,
+    device_file = rules.device.output.device_file
+  output:
+    discid_file = temp(varfiles.get_varfile("discid",
+                                            rules.tmpdir.output.tmpdir))
+  run:
+    device = varfiles.read_varfile(input.device_file)
+    discid = disc.get_disc_id(device)
+    varfiles.write_varfile(discid, output.discid_file)
+
+rule directory:
+  input:
+    tmpdir = rules.tmpdir.output.tmpdir
+  output:
+    directory_file = temp(varfiles.get_varfile("directory",
+                                               rules.tmpdir.output.tmpdir))
+  run:
     directory = parameters.get_param("directory", config)
+    varfiles.write_varfile(directory, output.directory_file)
+
+rule image:
+  input:
+    device_file = rules.device.output.device_file,
+    directory_file = rules.directory.output.directory_file
+  run:
+    device = varfiles.read_varfile(input.device_file)
+    basename = disc.get_basename(disc.read_disc_data(device))
+    directory = varfiles.read_varfile(input.directory_file)
     shell(disc.create_image(device, directory + "/bin", basename))

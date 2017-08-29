@@ -51,3 +51,5 @@ The following parameters are currently supported:
 
  * `device` - device to read Audio CDs from (default: detect default device)
  * `directory` - `cdshelf` base directory (default: `'/home/lecram/music'`)
+ * `tmpdir_prefix` - `cdshelf` temporary directory prefix (default: `'cdshelf.'`)
+ * `tmpdir_suffix` - `cdshelf` temporary directory suffix (default: `'.tmpdir'`)
