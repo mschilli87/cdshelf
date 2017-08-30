@@ -21,7 +21,7 @@
 
 # file:        disc.snake
 # created:     2017-03-26
-# last update: 2017-08-29
+# last update: 2017-08-30
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define disc-related rules for Audio CD backup & conversion tool
@@ -31,6 +31,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-08-30: added import of newly created paths module
 # 2017-08-29: added passing of variables from one rule to another through
 #             (temporary) files
 # 2017-04-23: switched to new parameters module to obtain directory parameter
@@ -59,6 +60,9 @@ import parameters
 
 # get disc-related functions
 import disc
+
+# get path-related functions
+import paths
 
 
 #########
@@ -103,6 +107,6 @@ rule image:
     directory_file = rules.directory.output.directory_file
   run:
     device = varfiles.read_varfile(input.device_file)
-    basename = disc.get_basename(disc.read_disc_data(device))
+    basename = paths.get_basename(disc.read_disc_data(device))
     directory = varfiles.read_varfile(input.directory_file)
     shell(disc.create_image(device, directory + "/bin", basename))

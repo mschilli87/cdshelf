@@ -32,7 +32,9 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-08-30: moved metadata-related functions into separate module
+# 2017-08-30: moved path-related functions into separate module
+#             removed superfluous import of defaults module
+#             moved metadata-related functions into separate module
 #             extended artist sort name retrieval to handle multiple artist
 #             credits
 #             adjusted medium index retrieval to handle empty disc list mediums
@@ -56,27 +58,11 @@
 ###########
 
 import messages
-import defaults
-import metadata
+import paths
 import commands
-import re
 from os.path import dirname
 from discid import get_default_device, DiscError
 from discid import read as read_disc
-
-
-#############
-# constants #
-#############
-
-# regular expression matching string separators
-separators_re = re.compile(r"[.-/ ]")
-
-# regular expression matching several underscores
-underscores_re = re.compile(r"_+")
-
-# regular expression matching illegal characters
-illegal_chars_re = re.compile(r"[^a-z0-9_]")
 
 
 #############
@@ -125,42 +111,6 @@ def get_disc_id(params):
   # output Disc ID read before returning it
   print(messages.disc_id(disc_id))
   return(disc_id)
-
-
-# convert string into a valid path element (not incl. any '/')
-def pathify_string(string):
-
-  # convert string to lower case
-  string = string.lower()
-
-  # replace separators by underscores
-  string = separators_re.sub("_", string)
-
-  # collapse several underscores to a single one
-  string = underscores_re.sub("_", string)
-
-  # replace ampersand by full word "and"
-  string = string.replace("&", "and")
-
-  # remove illegal characters
-  string = illegal_chars_re.sub("", string)
-
-  # return modified string
-  return(string)
-
-
-# get CD image basename from disc data
-def get_basename(disc_data):
-
-  # fetch metadata
-  meta_data = metadata.lookup_disc_id(disc_data)
-
-  # return basename: <artist>/<year>_<release>/<medium_index>-<Disc ID>
-  return(pathify_string(metadata.extract_artist_sort_name(meta_data)) + "/" + \
-         metadata.extract_year(meta_data) + "_" + \
-         pathify_string(metadata.extract_title(meta_data)) + "/" + \
-         metadata.get_medium_index(meta_data["medium-list"], disc_data.id) + \
-         "-" + disc_data.id)
 
 
 # create CD image
