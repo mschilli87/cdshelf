@@ -32,7 +32,9 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-08-30: fixed typos in ambiguous Disc ID catch
+# 2017-08-30: added passing of submission URL to Disc ID lookup error message
+#             generation
+#             fixed typos in ambiguous Disc ID catch
 #             initial version (metadata-related functions from disc.py)
 
 
@@ -63,7 +65,7 @@ def lookup_disc_id(disc):
 
   # abort with error if unsuccessful
   except ResponseError:
-    print(messages.disc_id_unknown(disc.id))
+    print(messages.disc_id_unknown(disc.id, disc.submission_url))
     exit(1)
 
   # get associated releases

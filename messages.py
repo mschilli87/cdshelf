@@ -31,7 +31,8 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-08-30: removed ambiguous artist credit error message
+# 2017-08-30: added submission URL to Disc ID lookup error message
+#             removed ambiguous artist credit error message
 #             added ambiguous artist credit error message
 #             fixed typo in function name
 # 2017-08-29: added tmpdir_prefix & tmpdir_suffix parameters
@@ -181,8 +182,9 @@ def lookup_disc_id(disc_id):
   return("fetching metadata for Disc ID '" + disc_id + "' from MusicBrainz...")
 
 # message indicating Disc ID lookup error
-def disc_id_unknown(disc_id):
-  return("ERROR: Disc ID '" + disc_id + "' is not associated to any release on MusicBrainz")
+def disc_id_unknown(disc_id, submission_url):
+  return("ERROR: Disc ID '" + disc_id + "' is not associated to any release on MusicBrainz.\n" +\
+         "Please submit it using the following URL: '" + submission_url + "'.")
 
 # message indicating ambiguous Disc ID lookup result
 def disc_id_ambiguous(disc_id):
