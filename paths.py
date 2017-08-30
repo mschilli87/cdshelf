@@ -19,19 +19,21 @@
 # general information #
 #######################
 
-# file:    paths.py
-# created: 2017-08-30
-# author:  Marcel Schilling <marcel.schilling@mdc-berlin.de>
-# license: GNU Affero General Public License Version 3 (GNU AGPL v3)
-# purpose: define path-related functions for cdshelf Audio CD backup &
-#          conversion tool
+# file:        paths.py
+# created:     2017-08-30
+# last update: 2017-08-30
+# author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
+# license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
+# purpose:     define path-related functions for cdshelf Audio CD backup &
+#              conversion tool
 
 
 ######################################
 # change log (reverse chronological) #
 ######################################
 
-# 2017-08-30: initial version (path-related constants / functions from disc.py)
+# 2017-08-30: fixed placing of '-' in separators regular expression definition
+#             initial version (path-related constants / functions from disc.py)
 
 
 ###########
@@ -47,7 +49,7 @@ import metadata
 #############
 
 # regular expression matching string separators
-separators_re = re.compile(r"[.-/ ]")
+separators_re = re.compile(r"[./ -]")
 
 # regular expression matching several underscores
 underscores_re = re.compile(r"_+")
