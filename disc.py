@@ -21,7 +21,7 @@
 
 # file:        disc.py
 # created:     2017-03-26
-# last update: 2017-04-23
+# last update: 2017-08-30
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define disc-related functions for cdshelf Audio CD backup &
@@ -32,6 +32,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-08-30: added missing print statement / fixed typo in comment
 # 2017-04-23: removed get_directory in favor of parameters.get_param
 #             adopted re-factored parameter-related messages
 #             corrected user specified shelf-directory message (copy/paste
@@ -124,9 +125,9 @@ def lookup_disc_id(disc):
   # get associated releases
   disc_metadata = disc_metadata["disc"]["release-list"]
 
-  # abort with error if unambigous
+  # abort with error if unambiguous
   if(len(disc_metadata) > 1):
-    messages.disc_ambiguous(disc_id)
+    print(messages.disc_ambiguous(disc_id))
     exit(1)
 
   # return metadata

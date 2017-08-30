@@ -21,7 +21,7 @@
 
 # file:        messages.py
 # created:     2017-03-26
-# last update: 2017-08-29
+# last update: 2017-08-30
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define messages for cdshelf Audio CD backup & conversion tool
@@ -31,6 +31,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-08-30: fixed typo in function name
 # 2017-08-29: added tmpdir_prefix & tmpdir_suffix parameters
 # 2017-04-23: re-factored parameter-related message definition (functions
 #             instead of copy/paste code)
@@ -182,7 +183,7 @@ def disc_id_unknown(disc_id):
   return("ERROR: Disc ID '" + disc_id + "' is not associated to any release on MusicBrainz")
 
 # message indicating ambiguous Disc ID lookup result
-def disc_id_ambigious(disc_id):
+def disc_id_ambiguous(disc_id):
   return("ERROR: Disc ID '" + disc_id + "' is associated to several releases on MusicBrainz")
 
 
