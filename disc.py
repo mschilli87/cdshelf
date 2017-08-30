@@ -32,7 +32,8 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-08-30: extended artist sort name retrieval to handle multiple artist
+# 2017-08-30: moved metadata-related functions into separate module
+#             extended artist sort name retrieval to handle multiple artist
 #             credits
 #             adjusted medium index retrieval to handle empty disc list mediums
 #             introduced string-pathification function based on regular
@@ -56,13 +57,12 @@
 
 import messages
 import defaults
+import metadata
 import commands
 import re
 from os.path import dirname
 from discid import get_default_device, DiscError
 from discid import read as read_disc
-from musicbrainzngs import set_useragent, ResponseError
-from musicbrainzngs import get_releases_by_discid as fetch_metadata
 
 
 #############
@@ -127,67 +127,6 @@ def get_disc_id(params):
   return(disc_id)
 
 
-# get disc metadata
-def lookup_disc_id(disc):
-
-  # set user agent
-  set_useragent("cdshelf", "alpha",
-                "https://github.com/mschilli87/cdshelf/issues")
-
-  # fetch metadata for Disc ID
-  print(messages.lookup_disc_id(disc.id))
-  try:
-    disc_metadata = fetch_metadata(disc.id, cdstubs=False, includes=["artists"])
-
-  # abort with error if unsuccessful
-  except ResponseError:
-    print(messages.disc_id_unknown(disc.id))
-    exit(1)
-
-  # get associated releases
-  disc_metadata = disc_metadata["disc"]["release-list"]
-
-  # abort with error if unambiguous
-  if(len(disc_metadata) > 1):
-    print(messages.disc_ambiguous(disc_id))
-    exit(1)
-
-  # return metadata
-  return(disc_metadata[0])
-
-
-# extract artist credit from release metadata
-def extract_artist_sort_name(metadata):
-  return(''.join([entry["artist"]["sort-name"] if type(entry) is dict else entry
-                   for entry in metadata["artist-credit"]]))
-
-
-# extract release year from release metadata
-def extract_year(metadata):
-  return(metadata["date"][0:4])
-
-
-# extract release title from release metadata
-def extract_title(metadata):
-  return(metadata["title"])
-
-
-# extract index of medium matching given Disc ID from release metadata
-def get_medium_index(mediums, disc_id):
-
-  # count mediums
-  n_mediums = len(mediums)
-
-  # match Disc ID
-  medium_index = [i + 1 for i in range(n_mediums)
-                  if len(mediums[i]["disc-list"]) > 0 and \
-                     mediums[i]["disc-list"][0]["id"] == disc_id][0]
-
-  # pad medium index with as many zeroes as nessecary before returning it
-  digits_medium = len(str(n_mediums))
-  return(str(medium_index).zfill(digits_medium))
-
-
 # convert string into a valid path element (not incl. any '/')
 def pathify_string(string):
 
@@ -214,14 +153,14 @@ def pathify_string(string):
 def get_basename(disc_data):
 
   # fetch metadata
-  metadata = lookup_disc_id(disc_data)
+  meta_data = metadata.lookup_disc_id(disc_data)
 
   # return basename: <artist>/<year>_<release>/<medium_index>-<Disc ID>
-  return(pathify_string(extract_artist_sort_name(metadata)) + "/" + \
-         extract_year(metadata) + "_" + \
-         pathify_string(extract_title(metadata)) + "/" + \
-         get_medium_index(metadata["medium-list"], disc_data.id) + "-" + \
-         disc_data.id)
+  return(pathify_string(metadata.extract_artist_sort_name(meta_data)) + "/" + \
+         metadata.extract_year(meta_data) + "_" + \
+         pathify_string(metadata.extract_title(meta_data)) + "/" + \
+         metadata.get_medium_index(meta_data["medium-list"], disc_data.id) + \
+         "-" + disc_data.id)
 
 
 # create CD image
