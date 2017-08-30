@@ -32,7 +32,8 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-08-30: introduced string-pathification function based on regular
+# 2017-08-30: adjusted medium index retrieval to handle empty disc list mediums
+#             introduced string-pathification function based on regular
 #             expressions
 #             switched to using artist sort name for basename (unambiguous
 #             artist credits only)
@@ -186,7 +187,8 @@ def get_medium_index(mediums, disc_id):
 
   # match Disc ID
   medium_index = [i + 1 for i in range(n_mediums)
-                  if mediums[i]["disc-list"][0]["id"] == disc_id][0]
+                  if len(mediums[i]["disc-list"]) > 0 and \
+                     mediums[i]["disc-list"][0]["id"] == disc_id][0]
 
   # pad medium index with as many zeroes as nessecary before returning it
   digits_medium = len(str(n_mediums))
