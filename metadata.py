@@ -19,19 +19,21 @@
 # general information #
 #######################
 
-# file:    metadata.py
-# created: 2017-08-30
-# author:  Marcel Schilling <marcel.schilling@mdc-berlin.de>
-# license: GNU Affero General Public License Version 3 (GNU AGPL v3)
-# purpose: define metadata-related functions for cdshelf Audio CD backup &
-#          conversion tool
+# file:        metadata.py
+# created:     2017-08-30
+# last update: 2017-08-30
+# author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
+# license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
+# purpose:     define metadata-related functions for cdshelf Audio CD backup &
+#              conversion tool
 
 
 ######################################
 # change log (reverse chronological) #
 ######################################
 
-# 2017-08-30: initial version (metadata-related functions from disc.py)
+# 2017-08-30: fixed typos in ambiguous Disc ID catch
+#             initial version (metadata-related functions from disc.py)
 
 
 ###########
@@ -69,7 +71,7 @@ def lookup_disc_id(disc):
 
   # abort with error if unambiguous
   if(len(disc_metadata) > 1):
-    print(messages.disc_ambiguous(disc_id))
+    print(messages.disc_id_ambiguous(disc.id))
     exit(1)
 
   # return metadata
