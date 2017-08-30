@@ -32,7 +32,9 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-08-30: adjusted medium index retrieval to handle empty disc list mediums
+# 2017-08-30: extended artist sort name retrieval to handle multiple artist
+#             credits
+#             adjusted medium index retrieval to handle empty disc list mediums
 #             introduced string-pathification function based on regular
 #             expressions
 #             switched to using artist sort name for basename (unambiguous
@@ -156,17 +158,8 @@ def lookup_disc_id(disc):
 
 # extract artist credit from release metadata
 def extract_artist_sort_name(metadata):
-
-  # get artist credit
-  artist_credit = metadata["artist-credit"]
-
-  # abort with error if ambiguous
-  if(len(artist_credit) > 1):
-    print(messages.artist_credit_ambiguous(metadata["id"]))
-    exit(1)
-
-  # return artist sort name
-  return(artist_credit[0]["artist"]["sort-name"])
+  return(''.join([entry["artist"]["sort-name"] if type(entry) is dict else entry
+                   for entry in metadata["artist-credit"]]))
 
 
 # extract release year from release metadata
