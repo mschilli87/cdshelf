@@ -32,7 +32,9 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-08-30: switched to using artist sort name for basename (unambiguous
+# 2017-08-30: introduced string-pathification function based on regular
+#             expressions
+#             switched to using artist sort name for basename (unambiguous
 #             artist credits only)
 #             added missing print statement / fixed typo in comment
 # 2017-04-23: removed get_directory in favor of parameters.get_param
@@ -52,11 +54,26 @@
 import messages
 import defaults
 import commands
+import re
 from os.path import dirname
 from discid import get_default_device, DiscError
 from discid import read as read_disc
 from musicbrainzngs import set_useragent, ResponseError
 from musicbrainzngs import get_releases_by_discid as fetch_metadata
+
+
+#############
+# constants #
+#############
+
+# regular expression matching string separators
+separators_re = re.compile(r"[.-/ ]")
+
+# regular expression matching several underscores
+underscores_re = re.compile(r"_+")
+
+# regular expression matching illegal characters
+illegal_chars_re = re.compile(r"[^a-z0-9_]")
 
 
 #############
@@ -176,6 +193,28 @@ def get_medium_index(mediums, disc_id):
   return(str(medium_index).zfill(digits_medium))
 
 
+# convert string into a valid path element (not incl. any '/')
+def pathify_string(string):
+
+  # convert string to lower case
+  string = string.lower()
+
+  # replace separators by underscores
+  string = separators_re.sub("_", string)
+
+  # collapse several underscores to a single one
+  string = underscores_re.sub("_", string)
+
+  # replace ampersand by full word "and"
+  string = string.replace("&", "and")
+
+  # remove illegal characters
+  string = illegal_chars_re.sub("", string)
+
+  # return modified string
+  return(string)
+
+
 # get CD image basename from disc data
 def get_basename(disc_data):
 
@@ -183,9 +222,9 @@ def get_basename(disc_data):
   metadata = lookup_disc_id(disc_data)
 
   # return basename: <artist>/<year>_<release>/<medium_index>-<Disc ID>
-  return(extract_artist_sort_name(metadata).lower().replace(", "," ").replace(" ","_") + \
-         "/" + extract_year(metadata) + "_" + \
-         extract_title(metadata).lower().replace(" ","_") + "/" + \
+  return(pathify_string(extract_artist_sort_name(metadata)) + "/" + \
+         extract_year(metadata) + "_" + \
+         pathify_string(extract_title(metadata)) + "/" + \
          get_medium_index(metadata["medium-list"], disc_data.id) + "-" + \
          disc_data.id)
 
