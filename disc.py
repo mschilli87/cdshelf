@@ -32,7 +32,9 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-08-30: added missing print statement / fixed typo in comment
+# 2017-08-30: switched to using artist sort name for basename (unambiguous
+#             artist credits only)
+#             added missing print statement / fixed typo in comment
 # 2017-04-23: removed get_directory in favor of parameters.get_param
 #             adopted re-factored parameter-related messages
 #             corrected user specified shelf-directory message (copy/paste
@@ -135,8 +137,18 @@ def lookup_disc_id(disc):
 
 
 # extract artist credit from release metadata
-def extract_artist_credit(metadata):
-  return(metadata["artist-credit-phrase"])
+def extract_artist_sort_name(metadata):
+
+  # get artist credit
+  artist_credit = metadata["artist-credit"]
+
+  # abort with error if ambiguous
+  if(len(artist_credit) > 1):
+    print(messages.artist_credit_ambiguous(metadata["id"]))
+    exit(1)
+
+  # return artist sort name
+  return(artist_credit[0]["artist"]["sort-name"])
 
 
 # extract release year from release metadata
@@ -171,8 +183,8 @@ def get_basename(disc_data):
   metadata = lookup_disc_id(disc_data)
 
   # return basename: <artist>/<year>_<release>/<medium_index>-<Disc ID>
-  return(extract_artist_credit(metadata).lower().replace(" ","_") + "/" + \
-         extract_year(metadata) + "_" + \
+  return(extract_artist_sort_name(metadata).lower().replace(", "," ").replace(" ","_") + \
+         "/" + extract_year(metadata) + "_" + \
          extract_title(metadata).lower().replace(" ","_") + "/" + \
          get_medium_index(metadata["medium-list"], disc_data.id) + "-" + \
          disc_data.id)

@@ -31,7 +31,8 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-08-30: fixed typo in function name
+# 2017-08-30: added ambiguous artist credit error message
+#             fixed typo in function name
 # 2017-08-29: added tmpdir_prefix & tmpdir_suffix parameters
 # 2017-04-23: re-factored parameter-related message definition (functions
 #             instead of copy/paste code)
@@ -185,6 +186,11 @@ def disc_id_unknown(disc_id):
 # message indicating ambiguous Disc ID lookup result
 def disc_id_ambiguous(disc_id):
   return("ERROR: Disc ID '" + disc_id + "' is associated to several releases on MusicBrainz")
+
+# message indicating ambiguous artist credit
+def artist_credit_ambiguous(release_id):
+  return("ERROR: release ID '" + release_id + \
+      "' is credited to several artists on MusicBrainz")
 
 
 ##########################
