@@ -31,7 +31,8 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-10-15: added open_submission_url parameter
+# 2017-10-15: added pretend_image command & correspondig message
+#             added open_submission_url parameter
 # 2017-08-30: added submission URL to Disc ID lookup error message
 #             removed ambiguous artist credit error message
 #             added ambiguous artist credit error message
@@ -66,13 +67,14 @@ usage: cdshelf <command> [<command> ...] [--config <parameter>=<value> [<paramet
 
 The following commands are currently supported:
 
-help      print help message
-image     create CD image
-usage     show usage
-license   print license
-discid    print Disc ID of Audio CD in CD device
-device    print CD device to be used for reading Audio CDs
-directory print cdshelf base directory
+help          print help message
+pretend_image pretend to create CD image (dry-run)
+image         create CD image
+usage         show usage
+license       print license
+discid        print Disc ID of Audio CD in CD device
+device        print CD device to be used for reading Audio CDs
+directory     print cdshelf base directory
 
 The following parameters are currently supported:
 
@@ -207,7 +209,16 @@ def disc_id_ambiguous(disc_id):
 # image-related messages #
 ##########################
 
+# message indicating image generation target
+def image_target(device, directory, basename):
+    return(" an image of CD in device '" + device + "' in directory '" +
+           directory + "' using basename '" + basename + "'")
+
+# message pretending image generation
+def pretend_image(device, directory, basename):
+    return("cdshelf image would create" +
+           image_target(device, directory, basename))
+
 # message indicating image generation
 def create_image(device, directory, basename):
-    return("creating an image of CD in device '" + device + "' in directory '" +
-           directory + "' using basename '" + basename + "'")
+    return("creating" + image_target(device, directory, basename))

@@ -40,6 +40,7 @@ cdshelf <command> [<command> ...] [--config <parameter>=<value> [<parameter>=<va
 The following commands are currently supported:
 
  * `help` - print help message
+ * `pretend_image` -  pretend to create CD image (dry-run)
  * `image` - create CD image
  * `usage` - show usage
  * `license` - print license

@@ -21,7 +21,7 @@
 
 # file:        disc.py
 # created:     2017-03-26
-# last update: 2017-08-30
+# last update: 2017-10-15
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define disc-related functions for cdshelf Audio CD backup &
@@ -32,6 +32,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-10-15: added pretend_image function
 # 2017-08-30: moved path-related functions into separate module
 #             removed superfluous import of defaults module
 #             moved metadata-related functions into separate module
@@ -111,6 +112,13 @@ def get_disc_id(params):
   # output Disc ID read before returning it
   print(messages.disc_id(disc_id))
   return(disc_id)
+
+
+# pretend to create CD image
+def pretend_image(device, directory, basename):
+
+    # print message pretending to create CD image:
+    print(messages.pretend_image(device, directory, basename))
 
 
 # create CD image

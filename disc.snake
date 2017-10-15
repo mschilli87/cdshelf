@@ -31,7 +31,8 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-10-15: added passing down of open_submission_url parameter
+# 2017-10-15: added pretend_image rule
+#             added passing down of open_submission_url parameter
 # 2017-08-30: added import of newly created paths module
 # 2017-08-29: added passing of variables from one rule to another through
 #             (temporary) files
@@ -101,6 +102,16 @@ rule directory:
   run:
     directory = parameters.get_param("directory", config)
     varfiles.write_varfile(directory, output.directory_file)
+
+rule pretend_image:
+  input:
+    device_file = rules.device.output.device_file,
+    directory_file = rules.directory.output.directory_file
+  run:
+    device = varfiles.read_varfile(input.device_file)
+    basename = paths.get_basename(disc.read_disc_data(device), False)
+    directory = varfiles.read_varfile(input.directory_file)
+    disc.pretend_image(device, directory + "/bin", basename)
 
 rule image:
   input:
