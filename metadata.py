@@ -32,7 +32,9 @@
 # change log (reverse chronological) #
 ######################################
 
-# 2017-10-15: fixed typo in comment
+# 2017-10-15: added opening of submission URL in (default) webbrowser upon Disc
+#             ID lookup error (depending on open_submission_url parameter)
+#             fixed typo in comment
 # 2017-08-30: added passing of submission URL to Disc ID lookup error message
 #             generation
 #             fixed typos in ambiguous Disc ID catch
@@ -46,6 +48,7 @@
 import messages
 from musicbrainzngs import set_useragent, ResponseError
 from musicbrainzngs import get_releases_by_discid as fetch_metadata
+from webbrowser import open_new_tab as open_url_in_webbrowser
 
 
 #############
@@ -53,7 +56,7 @@ from musicbrainzngs import get_releases_by_discid as fetch_metadata
 #############
 
 # get disc metadata
-def lookup_disc_id(disc):
+def lookup_disc_id(disc, open_submission_url):
 
   # set user agent
   set_useragent("cdshelf", "alpha",
@@ -67,6 +70,9 @@ def lookup_disc_id(disc):
   # abort with error if unsuccessful
   except ResponseError:
     print(messages.disc_id_unknown(disc.id, disc.submission_url))
+    if(open_submission_url):
+      open_url_in_webbrowser(disc.submission_url)
+    print("Please re-run cdshelf after successfully submitting the Disc ID to MusicBrainz")
     exit(1)
 
   # get associated releases

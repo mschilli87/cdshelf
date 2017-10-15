@@ -21,7 +21,7 @@
 
 # file:        messages.py
 # created:     2017-03-26
-# last update: 2017-08-30
+# last update: 2017-10-15
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define messages for cdshelf Audio CD backup & conversion tool
@@ -31,6 +31,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-10-15: added open_submission_url parameter
 # 2017-08-30: added submission URL to Disc ID lookup error message
 #             removed ambiguous artist credit error message
 #             added ambiguous artist credit error message
@@ -75,10 +76,17 @@ directory print cdshelf base directory
 
 The following parameters are currently supported:
 
-device        device to read Audio CDs from (default: detect default device)
-directory     cdshelf base directory (default: '""" + defaults.directory + """')
-tmpdir_prefix cdshelf temporary directory prefix (default: '""" + defaults.tmpdir_prefix + """')
-tmpdir_suffix cdshelf temporary directory suffix (default: '""" + defaults.tmpdir_suffix + """')
+device              device to read Audio CDs from (default: detect default device)
+directory           cdshelf base directory (default: '""" + \
+                    defaults.directory + """')
+open_submission_url choice on wether ("yes") or not ("no" [or any other value])
+                    to (attempt to) open the submission URL of an unknown Disc
+                    ID in the (default) web browser (default: '""" + \
+                    defaults.open_submission_url + """')
+tmpdir_prefix       cdshelf temporary directory prefix (default: '""" + \
+                    defaults.tmpdir_prefix + """')
+tmpdir_suffix       cdshelf temporary directory suffix (default: '""" + \
+                    defaults.tmpdir_suffix + """')
 """
 
 # define help message
@@ -117,6 +125,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 param_label = {
   "device": "CD device",
   "directory": "shelf directory",
+  "open_submission_url": "choice on wether ('yes') or not ('no' [or any " + \
+                         "other value]) to (attempt to) open the " + \
+                         "submission URL of an unknown Disc ID in the " + \
+                         "(default) web browser",
   "tmpdir_prefix": "cdshelf temporary directory prefix",
   "tmpdir_suffix": "cdshelf temporary directory suffix",
 }

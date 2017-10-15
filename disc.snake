@@ -21,7 +21,7 @@
 
 # file:        disc.snake
 # created:     2017-03-26
-# last update: 2017-08-30
+# last update: 2017-10-15
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define disc-related rules for Audio CD backup & conversion tool
@@ -31,6 +31,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-10-15: added passing down of open_submission_url parameter
 # 2017-08-30: added import of newly created paths module
 # 2017-08-29: added passing of variables from one rule to another through
 #             (temporary) files
@@ -107,6 +108,8 @@ rule image:
     directory_file = rules.directory.output.directory_file
   run:
     device = varfiles.read_varfile(input.device_file)
-    basename = paths.get_basename(disc.read_disc_data(device))
+    open_submission_url = parameters.get_param("open_submission_url", config)
+    basename = paths.get_basename(disc.read_disc_data(device),
+                                  open_submission_url == "yes")
     directory = varfiles.read_varfile(input.directory_file)
     shell(disc.create_image(device, directory + "/bin", basename))

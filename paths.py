@@ -21,7 +21,7 @@
 
 # file:        paths.py
 # created:     2017-08-30
-# last update: 2017-08-30
+# last update: 2017-10-15
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define path-related functions for cdshelf Audio CD backup &
@@ -32,6 +32,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-10-15: added passing down of open_submission_url parameter
 # 2017-08-30: fixed placing of '-' in separators regular expression definition
 #             initial version (path-related constants / functions from disc.py)
 
@@ -85,10 +86,10 @@ def pathify_string(string):
 
 
 # get CD image basename from disc data
-def get_basename(disc_data):
+def get_basename(disc_data, open_submission_url):
 
   # fetch metadata
-  meta_data = metadata.lookup_disc_id(disc_data)
+  meta_data = metadata.lookup_disc_id(disc_data, open_submission_url)
 
   # return basename: <artist>/<year>_<release>/<medium_index>-<Disc ID>
   return(pathify_string(metadata.extract_artist_sort_name(meta_data)) + "/" + \

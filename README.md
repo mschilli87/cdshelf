@@ -51,5 +51,8 @@ The following parameters are currently supported:
 
  * `device` - device to read Audio CDs from (default: detect default device)
  * `directory` - `cdshelf` base directory (default: `'/home/lecram/music'`)
+ * `open_submission_url`  - choice on wether (`"yes"`) or not (`"no"` [or
+ any other value]) to (attempt to) open the submission URL of an unknown
+ Disc ID in the (default) web browser (default: `'yes'`)
  * `tmpdir_prefix` - `cdshelf` temporary directory prefix (default: `'cdshelf.'`)
  * `tmpdir_suffix` - `cdshelf` temporary directory suffix (default: `'.tmpdir'`)
