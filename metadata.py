@@ -21,7 +21,7 @@
 
 # file:        metadata.py
 # created:     2017-08-30
-# last update: 2017-10-15
+# last update: 2017-11-23
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define metadata-related functions for cdshelf Audio CD backup &
@@ -32,6 +32,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-11-23: added extraction functions for release (group) ID
 # 2017-10-15: added opening of submission URL in (default) webbrowser upon Disc
 #             ID lookup error (depending on open_submission_url parameter)
 #             fixed typo in comment
@@ -65,7 +66,8 @@ def lookup_disc_id(disc, open_submission_url):
   # fetch metadata for Disc ID
   print(messages.lookup_disc_id(disc.id))
   try:
-    disc_metadata = fetch_metadata(disc.id, cdstubs=False, includes=["artists"])
+    disc_metadata = fetch_metadata(disc.id, cdstubs=False,
+                                   includes=["artists", "release-groups"])
 
   # abort with error if unsuccessful
   except ResponseError:
@@ -117,3 +119,13 @@ def get_medium_index(mediums, disc_id):
   # pad medium index with as many zeroes as nessecary before returning it
   digits_medium = len(str(n_mediums))
   return(str(medium_index).zfill(digits_medium))
+
+
+# extract release ID from release metadata
+def extract_release_id(metadata):
+  return(metadata['id'])
+
+
+# extract release group ID from release metadata
+def extract_release_group_id(metadata):
+  return(metadata['release-group']['id'])

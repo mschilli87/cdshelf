@@ -21,7 +21,7 @@
 
 # file:        disc.snake
 # created:     2017-03-26
-# last update: 2017-10-15
+# last update: 2017-11-23
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define disc-related rules for Audio CD backup & conversion tool
@@ -31,6 +31,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-11-23: changed disc image target directory from `bin` to `.cdshelf`
 # 2017-10-15: added pretend_image rule
 #             added passing down of open_submission_url parameter
 # 2017-08-30: added import of newly created paths module
@@ -111,7 +112,7 @@ rule pretend_image:
     device = varfiles.read_varfile(input.device_file)
     basename = paths.get_basename(disc.read_disc_data(device), False)
     directory = varfiles.read_varfile(input.directory_file)
-    disc.pretend_image(device, directory + "/bin", basename)
+    disc.pretend_image(device, directory + "/.cdshelf", basename)
 
 rule image:
   input:
@@ -123,4 +124,4 @@ rule image:
     basename = paths.get_basename(disc.read_disc_data(device),
                                   open_submission_url == "yes")
     directory = varfiles.read_varfile(input.directory_file)
-    shell(disc.create_image(device, directory + "/bin", basename))
+    shell(disc.create_image(device, directory + "/.cdshelf", basename))

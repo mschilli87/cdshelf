@@ -21,7 +21,7 @@
 
 # file:        paths.py
 # created:     2017-08-30
-# last update: 2017-10-15
+# last update: 2017-11-23
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define path-related functions for cdshelf Audio CD backup &
@@ -32,6 +32,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-11-23: added ID basename format (new default)
 # 2017-10-15: added passing down of open_submission_url parameter
 # 2017-08-30: fixed placing of '-' in separators regular expression definition
 #             initial version (path-related constants / functions from disc.py)
@@ -84,16 +85,26 @@ def pathify_string(string):
   # return modified string
   return(string)
 
-
 # get CD image basename from disc data
-def get_basename(disc_data, open_submission_url):
+def get_basename(disc_data, open_submission_url, pretty=False):
 
   # fetch metadata
   meta_data = metadata.lookup_disc_id(disc_data, open_submission_url)
 
-  # return basename: <artist>/<year>_<release>/<medium_index>-<Disc ID>
-  return(pathify_string(metadata.extract_artist_sort_name(meta_data)) + "/" + \
-         metadata.extract_year(meta_data) + "_" + \
-         pathify_string(metadata.extract_title(meta_data)) + "/" + \
-         metadata.get_medium_index(meta_data["medium-list"], disc_data.id) + \
-         "-" + disc_data.id)
+  # pretty basename dir: <artist>/<year>_<release>
+  # ID basename dir: <release_group_id>/<release_id>
+  basename_dir = ((
+      pathify_string(metadata.extract_artist_sort_name(meta_data)) + "/"
+      + metadata.extract_year(meta_data) + "_"
+      + pathify_string(metadata.extract_title(meta_data)))
+    if pretty else (
+      metadata.extract_release_group_id(meta_data) + "/"
+      + metadata.extract_release_id(meta_data)))
+
+  # basename file: <medium_index>-<Disc ID>
+  basename_file = (metadata.get_medium_index(meta_data["medium-list"],
+                                             disc_data.id)
+                   + "-" + disc_data.id)
+
+  # return full basename
+  return(basename_dir + "/" + basename_file)
