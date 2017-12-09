@@ -23,7 +23,7 @@
 
 # file:        cdshelf
 # created:     2017-03-26
-# last update: 2017-04-23
+# last update: 2017-12-09
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     Audio CD backup & conversion tool
@@ -33,6 +33,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-12-09: fixed copy/paste error in comment
 # 2017-04-23: switched to referencing help rule dummy output by variable
 # 2017-03-26: included disc-related rules
 #             moved message rules into separate Snakefile
@@ -47,7 +48,7 @@
 # get message rules
 include: "messages.snake"
 
-# get message rules
+# get disc rules
 include: "disc.snake"
 
 
