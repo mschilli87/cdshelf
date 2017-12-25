@@ -1,0 +1,94 @@
+# cdshelf metadata Snakefile
+# Copyright (C) 2017  Marcel Schilling
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+#######################
+# general information #
+#######################
+
+# file:    metadata.snake
+# created: 2017-12-25
+# author:  Marcel Schilling <marcel.schilling@mdc-berlin.de>
+# license: GNU Affero General Public License Version 3 (GNU AGPL v3)
+# purpose: define metadata-related rules for Audio CD backup & conversion tool
+
+
+######################################
+# change log (reverse chronological) #
+######################################
+
+# 2017-12-25: initial version (get_metadata)
+
+
+###########
+# imports #
+###########
+
+# get parameter-related functions
+import parameters
+
+# get metadata-related functions
+import metadata
+
+# get glob-related functions
+import glob
+
+
+###############
+# directories #
+###############
+
+# get cdshelf base directory
+base_dir = parameters.get_param("directory", config)
+
+# set cdshelf shelf directory
+shelf_dir = os.path.join(base_dir, ".cdshelf")
+
+# get release directories (<shelf_dir>/<release_group_id>/<release_id>/):
+#  1. glob including final sep to ensure it's a directory
+#  2. strip off final sep to keep have the directory name only
+release_dirs = [dir_with_sep.rstrip(os.path.sep) for dir_with_sep in
+                glob.glob(os.path.join(shelf_dir, "*", "*", ""))]
+
+
+#########
+# files #
+#########
+
+# define release metadata YAML file per release directory
+metadata_ymls = [os.path.join(release_dir,
+                              os.path.basename(release_dir) + ".yml") 
+                 for release_dir in release_dirs]
+
+
+#########
+# rules #
+#########
+
+# meta-rule to make all release metadata YAML files
+rule get_metadata:
+  input: metadata_ymls
+
+# pattern-rule to make a specific release metadata YAML file
+rule metadata_yml:
+  input:
+    dir = os.path.join(shelf_dir, "{release_group_id}", "{release_id}")
+  output:
+    yml = os.path.join(shelf_dir, "{release_group_id}", "{release_id}",
+                       "{release_id}.yml")
+  run:
+    metadata.write_yaml(metadata.lookup_release_id(wildcards.release_id),
+                        output.yml)

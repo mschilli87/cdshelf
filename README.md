@@ -29,6 +29,7 @@ If not, see <http://www.gnu.org/licenses/>.
  * [python-discid](https://python-discid.readthedocs.io)
  * [musicbrainzngs](https://python-musicbrainzngs.readthedocs.io)
  * [cdrdao](http://cdrdao.sourceforge.net)
+ * [PyYAML](http://pyyaml.org)
 
 
 ## Usage
@@ -42,6 +43,7 @@ The following commands are currently supported:
  * `help` - print help message
  * `pretend_image` -  pretend to create CD image (dry-run)
  * `image` - create CD image
+ * `get_metadata` - fetch missing metadata for shelved releases from MusicBrainz
  * `usage` - show usage
  * `license` - print license
  * `discid` - print Disc ID of Audio CD in CD device

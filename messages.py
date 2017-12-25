@@ -21,7 +21,7 @@
 
 # file:        messages.py
 # created:     2017-03-26
-# last update: 2017-10-15
+# last update: 2017-12-25
 # author:      Marcel Schilling <marcel.schilling@mdc-berlin.de>
 # license:     GNU Affero General Public License Version 3 (GNU AGPL v3)
 # purpose:     define messages for cdshelf Audio CD backup & conversion tool
@@ -31,6 +31,7 @@
 # change log (reverse chronological) #
 ######################################
 
+# 2017-12-25: added get_metadata command & release ID lookup messages
 # 2017-10-15: added pretend_image command & correspondig message
 #             added open_submission_url parameter
 # 2017-08-30: added submission URL to Disc ID lookup error message
@@ -70,6 +71,7 @@ The following commands are currently supported:
 help          print help message
 pretend_image pretend to create CD image (dry-run)
 image         create CD image
+get_metadata  fetch missing metadata for shelved releases from MusicBrainz
 usage         show usage
 license       print license
 discid        print Disc ID of Audio CD in CD device
@@ -203,6 +205,15 @@ def disc_id_unknown(disc_id, submission_url):
 # message indicating ambiguous Disc ID lookup result
 def disc_id_ambiguous(disc_id):
   return("ERROR: Disc ID '" + disc_id + "' is associated to several releases on MusicBrainz")
+
+# message indicating release ID lookup
+def lookup_release_id(release_id):
+  return("fetching metadata for release ID '" + release_id + "' from MusicBrainz...")
+
+# message indicating release ID lookup error
+def release_id_unknown(release_id):
+  return("ERROR: Release ID '" + release_id +\
+         "' is not associated to any release on MusicBrainz.")
 
 
 ##########################
